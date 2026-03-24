@@ -1,44 +1,45 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView ,TextInput} from 'react-native';
 import React, { useEffect, useState } from 'react'
-import Button from './src/Button/Button';
+import Button from './src/components/Button/Button';
 import { IProducts } from './src/Interfaces/IProducts';
-import ProductViewer from './src/ProductViewer/ProductViewer';
+import ProductViewer from './src/components/ProductViewer/ProductViewer';
+import ProductsListViewer from './src/components/ui/ProductListViewer/ProductListViewer';
 
 export default function App() {
   const [counter, setCounter] = useState(0)
   const [tColor, setTextColor] = useState("red")
   const [products, setProducts] = useState<Array<IProducts>>([]);
+  const [search, setSearch] = useState('coca')
   useEffect(() => {
     console.log('updated:', counter);
-    const p=fetch(
+    const p = fetch(
       `${process.env.EXPO_PUBLIC_API_URL
       }:${process.env.EXPO_PUBLIC_API_PORT
       }${process.env.EXPO_PUBLIC_API_ENDPOINT_PRODUCTS
       }`,
     ).then((r) => r.json())
     p.then((a) => {
-        setProducts(a)
-      });
+      setProducts(a)
+    });
   }, [])
   return (
-    <View style={styles.container}>
-     { products.length>0&&<ProductViewer product={products[0]}/>}
-      {/*<Text>{JSON.stringify(products)}</Text>*/}
-      {/* <Text style={[styles.text, { color: tColor }]}>value of counter {counter}</Text>
-      <Button bgColor="red" color="white" onButtonPressed={() => {
-        setCounter(counter - 1);
-        setTextColor('red')
-        console.log("button pressed", counter)
-      }}>reduce -1</Button>
-      <Button bgColor="blue" color="white" onButtonPressed={() => {
-        setCounter(counter + 1);
-        setTextColor("blue")
-        console.log("button pressed", counter)
-      }}>add +1</Button>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" /> */}
+     <View style={{ flex: 1,paddingTop:30 }}>
+      <TextInput
+        style={styles.fieldFind}
+        placeholder="Recherche"
+        placeholderTextColor={"grey"}
+        value={search}
+        onChangeText={(str)=>{
+          setSearch(str)
+        }}
+      />
+      <ScrollView>
+        <ProductsListViewer products={products.filter((product)=>product.titre.toLowerCase().includes(search.toLowerCase()))} />
+      </ScrollView>
+      
     </View>
+
   );
 }
 
@@ -46,11 +47,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    //alignItems: 'center',
+    //justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
   },
   text: {
     fontSize: 20,
     marginBottom: 10
-  }
+  },
+  fieldFind: {
+    height: 40,
+    fontSize: 28,
+    borderWidth: 1,
+    borderColor: "black",
+  },
 });
