@@ -6,6 +6,7 @@ import Button from './src/Button/Button';
 export default function App() {
   const [counter,setCounter] = useState(0)
   const [tColor,setTextColor] = useState("red")
+
   useEffect(()=>{
     console.log('updated:',counter);
   },[counter])
