@@ -1,6 +1,6 @@
-export interface IProducts{
+export interface IProduct{
     id?:number
-    title:string
+    titre:string
     description:string
     imageUrl:string
     thumbnailUrl:string

@@ -1,66 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView ,TextInput} from 'react-native';
-import React, { useEffect, useState } from 'react'
-import Button from './src/components/Button/Button';
-import { IProducts } from './src/Interfaces/IProducts';
-import ProductViewer from './src/components/ProductViewer/ProductViewer';
-import ProductsListViewer from './src/components/ui/ProductListViewer/ProductListViewer';
-
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { IProduct } from "./src/interfaces/IProducts";
+import ProductsListViewer from "./src/components/ui/ProductsListViewer/ProductsListViewer.connected";
+import Banner from "./src/components/ui/Banner/Banner";
+import {store} from './src/store/store'
+import { Provider } from "react-redux";
+import ProductsSearcher from "./src/components/functionnals/ProductsSearcher/ProductsSearcher.connected";
 export default function App() {
-  const [counter, setCounter] = useState(0)
-  const [tColor, setTextColor] = useState("red")
-  const [products, setProducts] = useState<Array<IProducts>>([]);
-  const [search, setSearch] = useState('coca')
-  useEffect(() => {
-    console.log('updated:', counter);
-    const p = fetch(
-      `${process.env.EXPO_PUBLIC_API_URL
-      }:${process.env.EXPO_PUBLIC_API_PORT
-      }${process.env.EXPO_PUBLIC_API_ENDPOINT_PRODUCTS
-      }`,
-    ).then((r) => r.json())
-    p.then((a) => {
-      setProducts(a)
-    });
-  }, [])
   return (
-     <View style={{ flex: 1,paddingTop:30 }}>
-      <TextInput
-        style={styles.fieldFind}
-        placeholder="Recherche"
-        placeholderTextColor={"grey"}
-        value={search}
-        onChangeText={(str)=>{
-          setSearch(str)
-        }}
-      />
-      <ScrollView>
-        <ProductsListViewer products={products.filter((product)=>product.titre.toLowerCase().includes(search.toLowerCase()))} />
-      </ScrollView>
-      
-    </View>
-
+    <Provider store={store}>
+      <View style={{ flex: 1, }}>
+        <Banner/>
+        <ProductsSearcher/>
+        <ScrollView>
+          <ProductsListViewer/>
+        </ScrollView>
+      </View>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    //alignItems: 'center',
-    //justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
-  },
-  text: {
-    fontSize: 20,
-    marginBottom: 10
-  },
-  fieldFind: {
-    height: 40,
-    fontSize: 28,
-    borderWidth: 1,
-    borderColor: "black",
-  },
-});
+const styles = StyleSheet.create({});

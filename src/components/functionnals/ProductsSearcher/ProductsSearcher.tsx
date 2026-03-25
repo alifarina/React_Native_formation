@@ -1,7 +1,10 @@
 import { View, Text, TextInput, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IProduct } from "../../../interfaces/IProducts";
-import { styles } from "./ProductSearcher.styles";
+import { styles } from "./ProductsSearcher.styles";
+import ProductsListViewer from "../../ui/ProductsListViewer/ProductsListViewer";
+import { store } from "../../../store/store";
+
 interface IProductsSearcherProps {
   products: Array<IProduct>;
   searchField: string;

@@ -1,11 +1,11 @@
 import { View, Text } from "react-native";
-import React from "react";
-import { IProducts } from "../../../interfaces/IProducts";
-import { styles } from "./ProductListViewer.styles";
+import React, { useState } from "react";
+import { IProduct } from "../../../interfaces/IProducts";
+import { styles } from "./ProductsListViewer.styles";
 import ProductViewer from "../ProductViewer/ProductViewer";
 
 interface IProductsListViewerProps {
-  products: Array<IProducts>;
+  products: Array<IProduct>;
 }
 
 const ProductsListViewer = ({ products }: IProductsListViewerProps) => {
