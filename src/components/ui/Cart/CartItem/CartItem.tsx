@@ -16,15 +16,15 @@ const CartItem = ({ product, onQuantChange }: Props) => {
         <Text style={styles.titre}>{product.titre}</Text>
         <Text style={styles.center}>
           Prix:{product.prix.toFixed(2)} X{" "}
-          {undefined !== product.quant ? product.quant.toFixed(2) : "1.00"}
+          {undefined !== product.quantity ? product.quantity.toFixed(2) : "1.00"}
         </Text>
       </View>
       <View style={styles.buttons}>
         <Button title=" - " color={'tomato'} onPress={()=>{
-            onQuantChange(product,undefined!==product.quant?product.quant-1:0)
+            onQuantChange(product,undefined!==product.quantity?product.quantity-1:0)
         }}/>
         <Button title=" + " color={'skyblue'} onPress={()=>{
-             onQuantChange(product,undefined!==product.quant?product.quant+1:1)
+             onQuantChange(product,undefined!==product.quantity?product.quantity+1:1)
         }}/>
       </View>
       </View>
@@ -32,7 +32,7 @@ const CartItem = ({ product, onQuantChange }: Props) => {
         <Text style={styles.totalValue}>
           {(
             Number(product.prix.toFixed(2)) *
-            Number(undefined !== product.quant ? product.quant.toFixed(2) : 1)
+            Number(undefined !== product.quantity ? product.quantity.toFixed(2) : 1)
           ).toFixed(2)}
         </Text>
       </View>

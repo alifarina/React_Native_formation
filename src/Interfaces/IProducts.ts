@@ -7,4 +7,5 @@ export interface IProduct{
     stock?:number
     prix:number
     quantity:number
+    cb?:string
 }

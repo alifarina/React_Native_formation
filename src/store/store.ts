@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import productsReducer, { initialProductLoad } from "./productsSlice";
-import {products} from '../../db.json'
+import productsReducer, { initialProductLoad, loadRestApi } from "./productsSlice";
+//import {products} from '../../db.json'
 import cartReducer from "./cartSlice";
 export const store=configureStore({
   reducer:{stock:productsReducer,cart:cartReducer}
 })
 store.subscribe(()=>console.trace(store.getState()))
 
-store.dispatch(initialProductLoad(products))
+//store.dispatch(initialProductLoad(products))
+
+store.dispatch(loadRestApi())
 
 
 
